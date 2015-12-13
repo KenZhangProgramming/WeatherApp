@@ -1,0 +1,36 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Location Settings -->
+    <string name="pref_header_location">Location</string>
+    <string name="pref_locationCity_label">City</string> <!--location city string -->
+    <string name="pref_locationCountry_label">Country</string>  <!--location country string -->
+    <string name="pref_locationCity_key" translatable = "false">location_City</string> // <!--location_City key -->
+    <string name="pref_locationCountry_key" translatable = "false">location_Country</string> // <!--location_Country key -->
+    <string name="pref_default_city" translatable = "false">Vancouver</string>
+    <string name="pref_default_country" translatable = "false">CA</string>
+    <string name="summary_location_description">Fill in the country and city</string>
+
+    <!-- Units Settings-->
+    <string name="pref_header_Units">Units</string>
+    <string name="pref_units_label">Units</string>
+    <string name="pref_units_key" translatable = "false">Units</string>
+    <string name="summary_units_description">Choose the unit</string>
+    <string name="pref_units_metric" translatable="false">metric</string>
+    <string name="pref_units_imperial" translatable="false">imperial</string>
+    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label_imperial">Imperial</string>
+
+
+    <string-array name="two_units">
+        <item>@string/pref_units_label_metric</item>
+        <item>@string/pref_units_label_imperial</item>
+    </string-array>
+
+    <string-array name="two_units_values">
+        <item>@string/pref_units_metric</item>
+        <item>@string/pref_units_imperial</item>
+    </string-array>
+</resources>
