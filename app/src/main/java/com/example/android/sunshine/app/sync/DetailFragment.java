@@ -38,7 +38,7 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
                 WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
                 WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
                 WeatherContract.WeatherEntry.COLUMN_PRESSURE,
-                WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+                WeatherContract.WeatherEntry.COLUMN_ICON_ID,
                 WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_CITY,
                 WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY
         };
@@ -52,7 +52,7 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
     public static final int COL_WEATHER_MIN_TEMP = 4;
     public static final int COL_WEATHER_HUMIDITY = 5;
     public static final int COL_WEATHER_PRESSURE = 6;
-    public static final int COL_WEATHER_CONDITION_ID = 9;
+    public static final int COL_WEATHER_CONDITION_ID = 7;
     public static final int COL_WEATHER_LOCATION_CITY = 10;
     public static final int COL_WEATHER_LOCATION_COUNTRY = 11;
 
@@ -144,14 +144,12 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             Log.v(LOG_TAG, "In onLoadFinished");
-            Boolean cool = false;
-            Boolean cool1 = false;
-            cool = (data!=null);
-            cool1 = !data.moveToFirst();
 
             // why u need data.moveToFirst to be false?!!!
             if (data != null && data.moveToFirst()) {
-                mIconView.setImageResource(R.drawable.ic_launcher);
+
+                String iconId = data.getString(COL_WEATHER_CONDITION_ID);
+                mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(iconId));
 
                 String dateString = data.getString(COL_WEATHER_DATE);
                 mDateView.setText(dateString);

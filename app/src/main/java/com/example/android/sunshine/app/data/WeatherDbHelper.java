@@ -26,10 +26,11 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_LOCATION_TABLE =
                 "CREATE TABLE " + LocationEntry.TABLE_NAME +
                 "(" + LocationEntry._ID + " INTEGER PRIMARY KEY," +
-                      LocationEntry.COLUMN_LOCATION_SETTING_CITY + " TEXT UNIQUE NOT NULL, " +
-                      LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " TEXT UNIQUE NOT NULL," +
+                      LocationEntry.COLUMN_LOCATION_SETTING_CITY + " TEXT NOT NULL, " +
+                      LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " TEXT NOT NULL," +
                       LocationEntry.COLUMN_COORD_LAT + " REAL NOT NULL," +
-                      LocationEntry.COLUMN_COORD_LONG + " REAL NOT NULL" + ");" ;
+                      LocationEntry.COLUMN_COORD_LONG + " REAL NOT NULL" +")";
+                       /* "PRIMARY KEY(" + LocationEntry.COLUMN_LOCATION_SETTING_CITY + "," + LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY +") ON CONFLICT REPLACE);";*/
 
         final String SQL_CREATE_WEATHER_TABLE =
                 "CREATE TABLE " + WeatherEntry.TABLE_NAME +
@@ -46,6 +47,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                               WeatherEntry.COLUMN_PRESSURE + " REAL NOT NULL, " +
                               WeatherEntry.COLUMN_WIND_SPEED + " REAL NOT NULL, " +
                               WeatherEntry.COLUMN_DEGREES + " REAL NOT NULL, " +
+                              WeatherEntry.COLUMN_ICON_ID+ " TEXT NOT NULL, " +
                               WeatherEntry.COLUMN_USER_DESC + " TEXT," +
                         // Set up the location column as a foreign key to location table.
                         " FOREIGN KEY (" + WeatherEntry.COLUMN_LOC_KEY + ") REFERENCES " +

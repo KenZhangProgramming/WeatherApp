@@ -141,6 +141,9 @@ public class WeatherContract {
          // Users' descriptions are stored as string
          public static final String COLUMN_USER_DESC = "user_description";
 
+         // Weather Icon to decide which icon will be used.
+         public static final String COLUMN_ICON_ID = "ICON_ID";
+
             public static Uri buildWeatherUri(long id) {
                 return ContentUris.withAppendedId(CONTENT_URI, id);
             }

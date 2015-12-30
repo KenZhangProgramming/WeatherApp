@@ -60,7 +60,7 @@
                     android:id="@+id/detail_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher" />
+                />
 
                 <TextView
                     android:id="@+id/detail_forecast_textview"
@@ -82,5 +82,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
            />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="210dip"
+            android:layout_height="wrap_content"
+            android:gravity="left|top"
+            android:ems="9"
+            android:inputType="textMultiLine"
+            android:hint= "@string/text_edit">
+            <requestFocus />
+        </EditText>
     </LinearLayout>
 </ScrollView>

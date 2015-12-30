@@ -52,6 +52,7 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
             WeatherEntry.COLUMN_SHORT_DESC,
             WeatherEntry.COLUMN_MAX_TEMP,
             WeatherEntry.COLUMN_MIN_TEMP,
+            WeatherEntry.COLUMN_ICON_ID,
             LocationEntry.COLUMN_LOCATION_SETTING_CITY,
             LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY
     };
@@ -63,8 +64,10 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
     public static final int COL_WEATHER_DESC = 2;
     public static final int COL_WEATHER_MAX_TEMP = 3;
     public static final int COL_WEATHER_MIN_TEMP = 4;
-    public static final int COL_LOCATION_SETTING_CITY = 5;
-    public static final int COL_LOCATION_SETTING_COUNTRY = 6;
+    public static final int COL_ICON_ID = 5;
+    public static final int COL_LOCATION_SETTING_CITY = 6;
+    public static final int COL_LOCATION_SETTING_COUNTRY = 7;
+
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -141,7 +144,7 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
     private void updateWeather() {
         String locationcity = Utility.getPreferredLocationCity(getActivity());
         String locationcountry = Utility.getPreferredLocationCountry(getActivity());
-        new FetchWeatherTask(getActivity()).execute("Vancouver", "CA");
+        new FetchWeatherTask(getActivity()).execute(locationcity,locationcountry);
     }
 
     @Override

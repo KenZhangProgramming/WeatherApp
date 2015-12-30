@@ -44,20 +44,20 @@ public class ForecastAdapter extends CursorAdapter {
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent){
-        // Choose the layout type
-        int viewType = getItemViewType(cursor.getPosition());
-        int layoutId = -1;
-        switch (viewType) {
-            case VIEW_TYPE_TODAY: {
-                layoutId = R.layout.list_item_forecast_today;
-                break;
+        public View newView(Context context, Cursor cursor, ViewGroup parent){
+            // Choose the layout type
+            int viewType = getItemViewType(cursor.getPosition());
+            int layoutId = -1;
+            switch (viewType) {
+                case VIEW_TYPE_TODAY: {
+                    layoutId = R.layout.list_item_forecast_today;
+                    break;
+                }
+                case VIEW_TYPE_FUTURE_DAY: {
+                    layoutId = R.layout.list_item_forecast;
+                    break;
+                }
             }
-            case VIEW_TYPE_FUTURE_DAY: {
-                layoutId = R.layout.list_item_forecast;
-                break;
-            }
-        }
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
@@ -69,10 +69,26 @@ public class ForecastAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
+        int viewType = getItemViewType(cursor.getPosition());
+        switch (viewType) {
+            case VIEW_TYPE_TODAY: {
+                // Get weather icon
+                viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(
+                        cursor.getString(ForecastFragment.COL_ICON_ID)));
+                break;
+            }
+            case VIEW_TYPE_FUTURE_DAY: {
+                // Get weather icon
+                viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(
+                        cursor.getString(ForecastFragment.COL_ICON_ID)));
+                break;
+            }
+        }
+
         // Read weather icon ID from cursor
-        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
+    //    String weatherIcon = cursor.getString(ForecastFragment.COL_ICON_ID);
         // Use placeholder image for now
-        viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
+      //  viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherIcon));
 
         // Read date from cursor
         String dateString = cursor.getString(ForecastFragment.COL_WEATHER_DATE);

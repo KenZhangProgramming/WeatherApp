@@ -101,6 +101,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 null);
 
         if (cursor.moveToFirst()) {
+            // When you find the record in the database, there's no insertion. There's only return!
             Log.v(LOG_TAG, "Found it in the database!");
             int locationIdIndex = cursor.getColumnIndex(LocationEntry._ID);
             return cursor.getLong(locationIdIndex);
@@ -151,6 +152,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         final String OWM_WEATHER = "weather";
         final String OWM_DESCRIPTION = "main";
         final String OWM_WEATHER_ID = "id";
+        final String OWM_WEATHER_ICON_ID = "icon";
 
         JSONObject forecastJson = new JSONObject(forcastJsonStr);
         JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
@@ -163,7 +165,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         Log.v(LOG_TAG, Loc_setting_city + " , " + Loc_setting_country + ", with coord: "
                 + cityLatitude + " " + cityLongitude);
 
-        // Insert the location into the database.
+        // Insert the location into the database. Get the locationID in order to refer to the correct location city and country
         long locationID = addLocation(Loc_setting_city, Loc_setting_country, cityLatitude, cityLongitude);
 
         // Get and insert the new weather information into the database
@@ -185,6 +187,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
             String description;
             int weatherId;
+            String Weather_Icon_ID;
 
             //Get the JSON object representing the day.
             JSONObject dayForecast = weatherArray.getJSONObject(i);
@@ -205,6 +208,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                     dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
             description = weatherObject.getString(OWM_DESCRIPTION);
             weatherId = weatherObject.getInt(OWM_WEATHER_ID);
+            Weather_Icon_ID = weatherObject.getString(OWM_WEATHER_ICON_ID);
 
             // Temperatures are in a child object called "temp".  Try not to name variables
             // "temp" when working with temperature.  It confuses everybody.
@@ -225,6 +229,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             weatherValues.put(WeatherEntry.COLUMN_MIN_TEMP, low);
             weatherValues.put(WeatherEntry.COLUMN_SHORT_DESC, description);
             weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, weatherId);
+            weatherValues.put(WeatherEntry.COLUMN_ICON_ID,  Weather_Icon_ID);
 
             cVVector.add(weatherValues);
 
