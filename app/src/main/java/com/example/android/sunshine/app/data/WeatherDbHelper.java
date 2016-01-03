@@ -63,8 +63,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + DescriptionEntry.TABLE_NAME +
                         "(" + DescriptionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         DescriptionEntry.COLUMN_DATE + " INTEGER NOT NULL," +
-                        DescriptionEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL" +
-                        ");";
+                        DescriptionEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
+                        " UNIQUE (" + DescriptionEntry.COLUMN_DATE + ", " +
+                        DescriptionEntry.COLUMN_DESCRIPTION + ") ON CONFLICT REPLACE);";
 
                         sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);
                         sqLiteDatabase.execSQL(SQL_CREATE_WEATHER_TABLE);

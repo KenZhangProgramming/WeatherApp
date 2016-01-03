@@ -58,18 +58,20 @@ public class DetailActivity extends ActionBarActivity {
     }*/
 
     public void EnterDatabase(View v){
-        EditText mEdit   = (EditText)findViewById(R.id.editText);
+        Intent intent = this.getIntent();
+        String forecastDate = intent.getStringExtra(DetailActivity.DATE_KEY);
+        Log.v(LOG_TAG, forecastDate);
+        EditText mEdit = (EditText)findViewById(R.id.editText);
         String descriptiontext = mEdit.getText().toString();
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         ContentValues inservalues = new ContentValues();
-        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, forecastDate);
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
         Log.v(LOG_TAG, descriptiontext);
-        db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null,inservalues);
+        db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null, inservalues);
+        Log.v(LOG_TAG, "insert success!");
         db.close();
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
