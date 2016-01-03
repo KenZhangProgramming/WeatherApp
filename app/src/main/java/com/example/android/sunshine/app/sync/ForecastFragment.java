@@ -88,6 +88,7 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         //Add the line in order for the fragment to handle menu events.
         setHasOptionsMenu(true);
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.forecastfragment, menu);

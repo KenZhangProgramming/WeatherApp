@@ -3,6 +3,7 @@ package com.example.android.sunshine.app.data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+import com.example.android.sunshine.app.data.WeatherContract.DescriptionEntry;
 
 /**
  * Created by kenzhang on 15-11-16.
@@ -341,6 +343,22 @@ public class WeatherProvider extends ContentProvider{
         mOpenHelper.close();
         super.shutdown();
     }
+/*
+    public void enterDatabasehelper(String s){
+       /* WeatherDbHelper mOpenHelper1 = new WeatherDbHelper(getContext());
+        SQLiteDatabase db = mOpenHelper1.getReadableDatabase();
+          db.insert(DescriptionEntry.TABLE_NAME,null,inservalues);
+        db.close();
+        *//*
+        Context mContext = this.getContext();
+        ContentValues inservalues = new ContentValues();
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, s);
+
+        Uri locationUri = mContext.getContentResolver().
+                insert(LocationEntry.CONTENT_URI, inservalues);
+        long locationRowId = ContentUris.parseId(locationUri);
+    }*/
 }
 
 

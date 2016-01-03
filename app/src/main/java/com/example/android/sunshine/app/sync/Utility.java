@@ -18,6 +18,7 @@ package com.example.android.sunshine.app.sync;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.data.WeatherContract;
@@ -63,6 +64,105 @@ public class Utility {
         Date date = WeatherContract.getDateFromDb(dateString);
         return DateFormat.getDateInstance().format(date);
     }
+
+    /**
+     * Helper method to provide the icon resource id according to the weather condition icon id returned
+     * by the OpenWeatherMap call.
+     * @param weatherIconId from OpenWeatherMap API response
+     * @return resource id for the corresponding icon. -1 if no relation is found.
+     */
+    public static int getIconResourceForWeatherCondition(String weatherIconId) {
+        switch (weatherIconId){
+            case "01d":
+                return R.drawable.ic_clear;
+            case "01n":
+                return R.drawable.ic_clear;
+            case "02d":
+                return R.drawable.ic_light_clouds;
+            case "02n":
+                return R.drawable.ic_light_clouds;
+            case "03d":
+                return R.drawable.ic_cloudy;
+            case "03n":
+                return R.drawable.ic_cloudy;
+            case "04d":
+                return R.drawable.ic_cloudy;
+            case "04n":
+                return R.drawable.ic_cloudy;
+            case "09d":
+                return R.drawable.ic_rain;
+            case "09n":
+                return R.drawable.ic_rain;
+            case "10d":
+                return R.drawable.ic_light_rain;
+            case "10n":
+                return R.drawable.ic_light_rain;
+            case "11d":
+                return R.drawable.ic_storm;
+            case "11n":
+                return R.drawable.ic_storm;
+            case "13d":
+                return R.drawable.ic_snow;
+            case "13n":
+                return R.drawable.ic_snow;
+            case "50d":
+                return R.drawable.ic_fog;
+            case "50n":
+                return R.drawable.ic_fog;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Helper method to provide the icon resource id according to the weather condition icon id returned
+     * by the OpenWeatherMap call.
+     * @param weatherIconId from OpenWeatherMap API response
+     * @return resource id for the corresponding icon. -1 if no relation is found.
+     */
+    public static int getArtResourceForWeatherCondition(String weatherIconId) {
+        switch (weatherIconId){
+            case "01d":
+                return R.drawable.art_clear;
+            case "01n":
+                return R.drawable.art_clear;
+            case "02d":
+                return R.drawable.art_light_clouds;
+            case "02n":
+                return R.drawable.art_light_clouds;
+            case "03d":
+                return R.drawable.art_clouds;
+            case "03n":
+                return R.drawable.art_clouds;
+            case "04d":
+                return R.drawable.art_clouds;
+            case "04n":
+                return R.drawable.art_clouds;
+            case "09d":
+                return R.drawable.art_rain;
+            case "09n":
+                return R.drawable.art_rain;
+            case "10d":
+                return R.drawable.art_light_rain;
+            case "10n":
+                return R.drawable.art_light_rain;
+            case "11d":
+                return R.drawable.art_storm;
+            case "11n":
+                return R.drawable.art_storm;
+            case "13d":
+                return R.drawable.art_snow;
+            case "13n":
+                return R.drawable.art_snow;
+            case "50d":
+                return R.drawable.art_fog;
+            case "50n":
+                return R.drawable.art_fog;
+            default:
+                return -1;
+        }
+    }
+
 
     /*
     * Monday, Tuesday, Wednesday correct formats for input long

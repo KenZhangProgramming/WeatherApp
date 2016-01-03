@@ -1,8 +1,12 @@
 package com.example.android.sunshine.app.sync;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,17 +20,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.data.WeatherDbHelper;
+import com.example.android.sunshine.app.data.WeatherProvider;
 
 public class DetailActivity extends ActionBarActivity {
     public static final String DATE_KEY = "forecast_date";
-
+    private Context mContext;
+    private WeatherDbHelper mOpenHelper;
+    private final String LOG_TAG = DetailActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this.getBaseContext();
+        mOpenHelper = new WeatherDbHelper(mContext);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -34,6 +45,32 @@ public class DetailActivity extends ActionBarActivity {
                     .commit();
         }
     }
+    /*
+    public void EnterDatabase(View v){
+        EditText mEdit   = (EditText)findViewById(R.id.editText);
+        String descriptiontext = mEdit.getText().toString();
+        Log.v(LOG_TAG, descriptiontext);
+        ContentValues inservalues = new ContentValues();
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
+        Uri locationUri = mContext.getContentResolver().
+                insert(WeatherContract.DescriptionEntry.CONTENT_URI, inservalues);
+    }*/
+
+    public void EnterDatabase(View v){
+        EditText mEdit   = (EditText)findViewById(R.id.editText);
+        String descriptiontext = mEdit.getText().toString();
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        ContentValues inservalues = new ContentValues();
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
+        Log.v(LOG_TAG, descriptiontext);
+        db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null,inservalues);
+        db.close();
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

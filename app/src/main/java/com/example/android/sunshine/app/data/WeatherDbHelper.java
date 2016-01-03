@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.android.sunshine.app.data.WeatherContract.LocationEntry;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+import com.example.android.sunshine.app.data.WeatherContract.DescriptionEntry;
 
 /**
  * Created by kenzhang on 15-11-12.
@@ -58,8 +59,16 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                         " UNIQUE (" + WeatherEntry.COLUMN_DATE + ", " +
                         WeatherEntry.COLUMN_LOC_KEY + ") ON CONFLICT REPLACE);";
 
+        final String SQL_CREATE_DESCRIPTION_TABLE =
+                "CREATE TABLE " + DescriptionEntry.TABLE_NAME +
+                        "(" + DescriptionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        DescriptionEntry.COLUMN_DATE + " INTEGER NOT NULL," +
+                        DescriptionEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL" +
+                        ");";
+
                         sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);
                         sqLiteDatabase.execSQL(SQL_CREATE_WEATHER_TABLE);
+                        sqLiteDatabase.execSQL(SQL_CREATE_DESCRIPTION_TABLE);
     }
 
     @Override

@@ -84,7 +84,7 @@
            />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editText"
             android:layout_width="210dip"
             android:layout_height="wrap_content"
             android:gravity="left|top"
@@ -93,5 +93,11 @@
             android:hint= "@string/text_edit">
             <requestFocus />
         </EditText>
+        <Button
+            android:id="@+id/enter_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/Enter_Text"
+            android:onClick="EnterDatabase" />
     </LinearLayout>
 </ScrollView>

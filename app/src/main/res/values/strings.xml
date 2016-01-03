@@ -7,6 +7,7 @@
     <string name = "action_refresh">Refresh Button</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="text_edit">How Do You Feel Today?</string>
+    <string name="Enter_Text">Enter</string>
     <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
     <!-- Pressure format in hPa [CHAR LIMIT=NONE] -->
     <string name="format_pressure">Pressure: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>

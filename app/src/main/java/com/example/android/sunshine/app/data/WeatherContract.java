@@ -31,6 +31,7 @@ public class WeatherContract {
     // Possible paths (appended to base content URI for possible URI's)
     public static final String PATH_WEATHER = "weather";
     public static final String PATH_LOCATION = "location";
+    public static final String PATH_DESC = "description";
 
     // Format used for storing dates in the database.  ALso used for converting those strings
     // back into date objects for comparison/processing.
@@ -62,9 +63,6 @@ public class WeatherContract {
             return null;
         }
     }
-
-
-
 
 
     /* Inner class that defines the table contents of the location table */
@@ -181,4 +179,39 @@ public class WeatherContract {
                 return uri.getQueryParameter(COLUMN_DATE);
             }
      }
+
+    public static final class DescriptionEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_DESC).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_DESC;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_DESC;
+
+        // Table name
+        public static final String TABLE_NAME = "description";
+        //Entries in the table
+        public static final String COLUMN_DATE = "Date";
+        public static final String COLUMN_DESCRIPTION = "weather_description";
+
+        /*
+        * The below is the query uri that you need to fix
+        * */
+        /*
+        // The location setting string is what will be sent to openweathermap
+        // as the location query.
+        public static final String COLUMN_LOCATION_SETTING_CITY = "location_setting_city";
+        public static final String COLUMN_LOCATION_SETTING_COUNTRY = "location_setting_country";
+
+        // In order to uniquely pinpoint the location on the map when we launch the
+        // map intent, we store the latitude and longitude as returned by openweathermap.
+        public static final String COLUMN_COORD_LAT = "coord_lat";
+        public static final String COLUMN_COORD_LONG = "coord_long";
+
+        public static Uri buildLocationUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }*/
+    }
 }
