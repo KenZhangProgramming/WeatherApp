@@ -17,8 +17,10 @@
 
         <TextView
             android:id="@+id/today_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-medium"
             android:text = "Today" />
 
         <TextView
