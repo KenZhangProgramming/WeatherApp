@@ -91,6 +91,11 @@ public class DetailActivity extends ActionBarActivity {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
+
+        if (id == R.id.action_feel) {
+            startActivity(new Intent(this, DescriptionActivity.class));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
