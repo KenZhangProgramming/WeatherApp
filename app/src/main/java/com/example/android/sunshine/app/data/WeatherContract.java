@@ -196,6 +196,8 @@ public class WeatherContract {
         public static final String COLUMN_DATE = "Date";
         public static final String COLUMN_DESCRIPTION = "weather_description";
 
+
+
         /*
         * The below is the query uri that you need to fix
         * */

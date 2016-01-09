@@ -17,4 +17,11 @@
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
     <string name="title_activity_description">DescriptionActivity</string>
 
+    <!-- table column names-->
+    <string name="table_Max">Max</string>
+    <string name="table_Min">Min</string>
+    <string name="table_Date">Date</string>
+    <string name="table_Desc">Description</string>
+
+
 </resources>
