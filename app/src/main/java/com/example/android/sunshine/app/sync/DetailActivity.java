@@ -64,9 +64,13 @@ public class DetailActivity extends ActionBarActivity {
         EditText mEdit = (EditText)findViewById(R.id.editText);
         String descriptiontext = mEdit.getText().toString();
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        String locationcity = Utility.getPreferredLocationCity(this);
+        String locationcountry = Utility.getPreferredLocationCountry(this);
         ContentValues inservalues = new ContentValues();
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, forecastDate);
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_CITY, locationcity);
+        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_COUNTRY, locationcountry);
         Log.v(LOG_TAG, descriptiontext);
         db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null, inservalues);
         Log.v(LOG_TAG, "insert success!");

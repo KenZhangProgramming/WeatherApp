@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app.sync;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,41 +50,19 @@ public class DescriptionActivity extends AppCompatActivity {
     }
 
     private void BuildTable1(TableLayout t, SQLiteDatabase DB) {
-
-            String sql = "SELECT Date, weather_description FROM description";
+            String sql = "SELECT Date, weather_description, City, Country FROM description";
             Cursor mCur = DB.rawQuery(sql, null);
             if (mCur.getCount() != 0) {
                 if (mCur.moveToFirst()) {
-
                     TableRow rowHeader = new TableRow(this);
-                    rowHeader.setLayoutParams(new TableLayout.LayoutParams(
-                            TableLayout.LayoutParams.MATCH_PARENT,
-                            TableLayout.LayoutParams.WRAP_CONTENT));
-
-                    TextView tv1 = new TextView(this);
-                    tv1.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-                    tv1.setGravity(Gravity.LEFT);
-                    tv1.setTextSize(10);
-                    tv1.setText("Date");
-                    rowHeader.addView(tv1);
-
-                    TextView tv2 = new TextView(this);
-                    tv2.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-                    tv2.setGravity(Gravity.LEFT);
-                    tv2.setTextSize(10);
-                    tv2.setText("Description");
-                    rowHeader.addView(tv2);
+                    buildRowHeaders(rowHeader);
                     t.addView(rowHeader);
 
                     do {
                     TableRow rows = new TableRow(this);
                     int cols = mCur.getColumnCount();
 
-                        for (int j = 0; j < cols; j++) {
+                        for (int j = 0; j < cols/2; j++) {
                             TextView tv = new TextView(this);
                             tv.setLayoutParams(new TableRow.LayoutParams(
                                     TableRow.LayoutParams.MATCH_PARENT,
@@ -91,15 +70,72 @@ public class DescriptionActivity extends AppCompatActivity {
                             tv.setGravity(Gravity.LEFT);
                             tv.setTextSize(10);
                             tv.setText(mCur.getString(j));
-                            tv.setPadding(0,0,100,0);
+                            tv.setPadding(0,0,20,0);
                             rows.addView(tv);
+                        }
 
+                        for (int j = cols/2 ; j < cols; j++) {
+                            TextView tv = new TextView(this);
+                            tv.setLayoutParams(new TableRow.LayoutParams(
+                                    TableRow.LayoutParams.MATCH_PARENT,
+                                    TableRow.LayoutParams.WRAP_CONTENT));
+                            tv.setGravity(Gravity.LEFT);
+                            tv.setTextSize(10);
+                            tv.setText(mCur.getString(j));
+                            tv.setPadding(100,0,0,0);
+                            rows.addView(tv);
                         }
                         t.addView(rows);
                     } while (mCur.moveToNext());
                 }
             }
     }
+
+    /*Helper method to create row headers*/
+    private void buildRowHeaders(TableRow r){
+        r.setLayoutParams(new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT));
+
+        TextView tv1 = new TextView(this);
+        tv1.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv1.setGravity(Gravity.LEFT);
+        tv1.setTextSize(10);
+        tv1.setText("Date");
+        r.addView(tv1);
+
+        TextView tv2 = new TextView(this);
+        tv2.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv2.setGravity(Gravity.LEFT);
+        tv2.setTextSize(10);
+        tv2.setText("Description");
+        r.addView(tv2);
+
+        TextView tv3 = new TextView(this);
+        tv3.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv3.setGravity(Gravity.LEFT);
+        tv3.setTextSize(10);
+        tv3.setText("City");
+        tv3.setPadding(100,0,0,0);
+        r.addView(tv3);
+
+        TextView tv4 = new TextView(this);
+        tv4.setLayoutParams(new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv4.setGravity(Gravity.LEFT);
+        tv4.setTextSize(10);
+        tv4.setText("Country");
+        tv4.setPadding(100,0,0,0);
+        r.addView(tv4);
+    }
+
 
 
     @Override

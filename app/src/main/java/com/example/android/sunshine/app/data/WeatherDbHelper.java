@@ -64,6 +64,8 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                         "(" + DescriptionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         DescriptionEntry.COLUMN_DATE + " INTEGER NOT NULL," +
                         DescriptionEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
+                        DescriptionEntry.COLUMN_CITY + " TEXT NOT NULL," +
+                        DescriptionEntry.COLUMN_COUNTRY + " TEXT NOT NULL," +
                         " UNIQUE (" + DescriptionEntry.COLUMN_DATE + ", " +
                         DescriptionEntry.COLUMN_DESCRIPTION + ") ON CONFLICT REPLACE);";
 

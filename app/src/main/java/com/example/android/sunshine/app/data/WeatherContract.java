@@ -195,7 +195,8 @@ public class WeatherContract {
         //Entries in the table
         public static final String COLUMN_DATE = "Date";
         public static final String COLUMN_DESCRIPTION = "weather_description";
-
+        public static final String COLUMN_CITY = "City";
+        public static final String COLUMN_COUNTRY = "Country";
 
 
         /*
