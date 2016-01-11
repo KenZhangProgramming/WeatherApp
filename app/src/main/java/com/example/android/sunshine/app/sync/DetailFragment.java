@@ -152,6 +152,7 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
                 mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(iconId));
 
                 String dateString = data.getString(COL_WEATHER_DATE);
+                dateString = Utility.changeDateFormat(dateString);
                 mDateView.setText(dateString);
 
                 String weatherDescription = data.getString(COL_WEATHER_DESC);

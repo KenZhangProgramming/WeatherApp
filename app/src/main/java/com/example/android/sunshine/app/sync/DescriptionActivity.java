@@ -68,9 +68,10 @@ public class DescriptionActivity extends AppCompatActivity {
                                     TableRow.LayoutParams.MATCH_PARENT,
                                     TableRow.LayoutParams.WRAP_CONTENT));
                             tv.setGravity(Gravity.LEFT);
-                            tv.setTextSize(10);
                             tv.setText(mCur.getString(j));
-                            tv.setPadding(0,0,20,0);
+                            tv.setPadding(0, 0, 20, 0);
+                            tv.setTextSize(12);
+                            tv.setWidth(250);
                             rows.addView(tv);
                         }
 
@@ -80,9 +81,9 @@ public class DescriptionActivity extends AppCompatActivity {
                                     TableRow.LayoutParams.MATCH_PARENT,
                                     TableRow.LayoutParams.WRAP_CONTENT));
                             tv.setGravity(Gravity.LEFT);
-                            tv.setTextSize(10);
+                            tv.setTextSize(12);
                             tv.setText(mCur.getString(j));
-                            tv.setPadding(100,0,0,0);
+                            tv.setPadding(25, 0, 0, 0);
                             rows.addView(tv);
                         }
                         t.addView(rows);
@@ -102,8 +103,8 @@ public class DescriptionActivity extends AppCompatActivity {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv1.setGravity(Gravity.LEFT);
-        tv1.setTextSize(10);
         tv1.setText("Date");
+        tv1.setTextSize(15);
         r.addView(tv1);
 
         TextView tv2 = new TextView(this);
@@ -111,8 +112,8 @@ public class DescriptionActivity extends AppCompatActivity {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv2.setGravity(Gravity.LEFT);
-        tv2.setTextSize(10);
         tv2.setText("Description");
+        tv2.setTextSize(15);
         r.addView(tv2);
 
         TextView tv3 = new TextView(this);
@@ -120,9 +121,9 @@ public class DescriptionActivity extends AppCompatActivity {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv3.setGravity(Gravity.LEFT);
-        tv3.setTextSize(10);
         tv3.setText("City");
-        tv3.setPadding(100,0,0,0);
+        tv3.setPadding(25,0,0,0);
+        tv3.setTextSize(15);
         r.addView(tv3);
 
         TextView tv4 = new TextView(this);
@@ -130,9 +131,9 @@ public class DescriptionActivity extends AppCompatActivity {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv4.setGravity(Gravity.LEFT);
-        tv4.setTextSize(10);
+        tv4.setTextSize(15);
         tv4.setText("Country");
-        tv4.setPadding(100,0,0,0);
+        tv4.setPadding(25,0,0,0);
         r.addView(tv4);
     }
 

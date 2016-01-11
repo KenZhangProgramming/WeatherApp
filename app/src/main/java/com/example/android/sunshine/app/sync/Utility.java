@@ -18,12 +18,14 @@ package com.example.android.sunshine.app.sync;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.data.WeatherContract;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -179,5 +181,20 @@ public class Utility {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT" + offset));
         String formattedDate = sdf.format(date);
         return formattedDate;
+    }
+
+
+    /*Change the date format from integer string to the ones that can be displayed properly on the screen*/
+
+    public static String changeDateFormat(String s){
+        SimpleDateFormat format = new SimpleDateFormat();
+        String date = "";
+       try{ Date newDate = format.parse(s);
+           format = new SimpleDateFormat("yyyy-MMM-dd c");
+           date = format.format(newDate);}
+       catch (ParseException e){
+           Log.v(Utility.class.getSimpleName(), "changeDateFormatIssue!");
+       }
+        return date;
     }
 }
