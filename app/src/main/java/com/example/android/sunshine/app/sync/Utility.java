@@ -187,7 +187,7 @@ public class Utility {
     /*Change the date format from integer string to the ones that can be displayed properly on the screen*/
 
     public static String changeDateFormat(String s){
-        SimpleDateFormat format = new SimpleDateFormat();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String date = "";
        try{ Date newDate = format.parse(s);
            format = new SimpleDateFormat("yyyy-MMM-dd c");

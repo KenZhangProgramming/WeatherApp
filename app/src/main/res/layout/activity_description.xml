@@ -10,7 +10,8 @@
     android:layout_height="wrap_content"
     android:paddingLeft="35dp"
     android:paddingTop="35dp"
-    android:id="@+id/mytable">
+    android:id="@+id/mytable"
+    android:background="@drawable/desc_background">
 </TableLayout>
 </ScrollView>
 

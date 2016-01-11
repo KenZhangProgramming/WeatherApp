@@ -50,7 +50,7 @@ public class DescriptionActivity extends AppCompatActivity {
     }
 
     private void BuildTable1(TableLayout t, SQLiteDatabase DB) {
-            String sql = "SELECT Date, weather_description, City, Country FROM description";
+            String sql = "SELECT Date, weather_description, City, Country FROM description ORDER BY Date";
             Cursor mCur = DB.rawQuery(sql, null);
             if (mCur.getCount() != 0) {
                 if (mCur.moveToFirst()) {
@@ -68,7 +68,9 @@ public class DescriptionActivity extends AppCompatActivity {
                                     TableRow.LayoutParams.MATCH_PARENT,
                                     TableRow.LayoutParams.WRAP_CONTENT));
                             tv.setGravity(Gravity.LEFT);
-                            tv.setText(mCur.getString(j));
+                            if(j == 0) {tv.setText(Utility.changeDateFormat(mCur.getString(j)));}
+                            else{
+                            tv.setText(mCur.getString(j));}
                             tv.setPadding(0, 0, 20, 0);
                             tv.setTextSize(12);
                             tv.setWidth(250);
@@ -122,7 +124,7 @@ public class DescriptionActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv3.setGravity(Gravity.LEFT);
         tv3.setText("City");
-        tv3.setPadding(25,0,0,0);
+        tv3.setPadding(25, 0, 0, 0);
         tv3.setTextSize(15);
         r.addView(tv3);
 

@@ -35,7 +35,7 @@ public class WeatherContract {
 
     // Format used for storing dates in the database.  ALso used for converting those strings
     // back into date objects for comparison/processing.
-    public static final String DATE_FORMAT = "yyyyMMMdd";
+    public static final String DATE_FORMAT = "yyyyMMdd";
 
     /**
      * Converts Date class to a string representation, used for easy comparison and database lookup.
