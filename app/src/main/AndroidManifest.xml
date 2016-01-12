@@ -6,10 +6,13 @@
 
     <application
         android:allowBackup="true"
+        android:logo="@drawable/ic_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".sync.MainActivity"
+            android:icon="@drawable/ic_logo"
+            android:logo="@drawable/ic_logo"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
