@@ -6,13 +6,14 @@
 
     <application
         android:allowBackup="true"
-        android:logo="@drawable/ic_logo"
+        android:logo="@drawable/art_clouds"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".sync.MainActivity"
-            android:icon="@drawable/ic_logo"
-            android:logo="@drawable/ic_logo"
+            android:theme="@style/ForecastTheme"
+            android:icon="@drawable/art_clouds"
+            android:logo="@drawable/art_clouds"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +32,7 @@
         <activity
             android:name=".sync.SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme"
             android:parentActivityName=".sync.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

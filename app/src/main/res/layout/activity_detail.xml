@@ -3,5 +3,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/android_background_fotor"
     tools:context="com.example.android.sunshine.app.sync.DetailActivity"
     tools:ignore="MergeRootFrame" />
