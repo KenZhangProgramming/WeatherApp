@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.data.WeatherContract;
@@ -73,6 +74,9 @@ public class DetailActivity extends ActionBarActivity {
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_COUNTRY, locationcountry);
         Log.v(LOG_TAG, descriptiontext);
         db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null, inservalues);
+        Toast.makeText(getApplicationContext(),
+                "Your Feeling Has Been Recorded", Toast.LENGTH_LONG).show();
+
         Log.v(LOG_TAG, "insert success!");
         db.close();
     }

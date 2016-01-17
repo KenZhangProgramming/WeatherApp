@@ -1,5 +1,7 @@
 package com.example.android.sunshine.app.sync;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -102,6 +104,8 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
            updateWeather();
+            Intent intent = new Intent(this.getContext(), MainActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -140,12 +144,10 @@ public class ForecastFragment extends Fragment implements android.support.v4.app
         super.onActivityCreated(savedInstanceState);
     }
 
-
-
     private void updateWeather() {
         String locationcity = Utility.getPreferredLocationCity(getActivity());
         String locationcountry = Utility.getPreferredLocationCountry(getActivity());
-        new FetchWeatherTask(getActivity()).execute(locationcity,locationcountry);
+        new FetchWeatherTask(getActivity()).execute(locationcity, locationcountry);
     }
 
     @Override
