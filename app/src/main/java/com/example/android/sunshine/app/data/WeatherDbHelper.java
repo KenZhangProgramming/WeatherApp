@@ -11,7 +11,6 @@ import com.example.android.sunshine.app.data.WeatherContract.DescriptionEntry;
  * Created by kenzhang on 15-11-12.
  */
 public class WeatherDbHelper extends SQLiteOpenHelper {
-    // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 2;
 
     static final String DATABASE_NAME = "weather.db";
@@ -22,8 +21,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase){
-        // Create a table to hold locations.  A location consists of the string supplied in the
-        // location setting, the city name, and the latitude and longitude
+        // Create a table to hold locations.
         final String SQL_CREATE_LOCATION_TABLE =
                 "CREATE TABLE " + LocationEntry.TABLE_NAME +
                 "(" + LocationEntry._ID + " INTEGER PRIMARY KEY," +
@@ -31,7 +29,6 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                       LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " TEXT NOT NULL," +
                       LocationEntry.COLUMN_COORD_LAT + " REAL NOT NULL," +
                       LocationEntry.COLUMN_COORD_LONG + " REAL NOT NULL" +")";
-                       /* "PRIMARY KEY(" + LocationEntry.COLUMN_LOCATION_SETTING_CITY + "," + LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY +") ON CONFLICT REPLACE);";*/
 
         final String SQL_CREATE_WEATHER_TABLE =
                 "CREATE TABLE " + WeatherEntry.TABLE_NAME +
@@ -66,6 +63,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                         DescriptionEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                         DescriptionEntry.COLUMN_CITY + " TEXT NOT NULL," +
                         DescriptionEntry.COLUMN_COUNTRY + " TEXT NOT NULL," +
+                        // To assure that users won't enter the same description twice on the same day
                         " UNIQUE (" + DescriptionEntry.COLUMN_DATE + ", " +
                         DescriptionEntry.COLUMN_DESCRIPTION + ") ON CONFLICT REPLACE);";
 
@@ -76,12 +74,8 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-        // Note that this only fires if you change the version number for your database.
+        // this only fires if you change the version number for your database.
         // It does NOT depend on the version number for your application.
-        // If you want to update the schema without wiping data, commenting out the next 2 lines
-        // should be your top priority before modifying this method.
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocationEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + WeatherEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);

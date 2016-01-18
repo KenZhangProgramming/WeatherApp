@@ -62,10 +62,6 @@ public class Utility {
         return String.format("%.0f", temp);
     }
 
-    static String formatDate(String dateString) {
-        Date date = WeatherContract.getDateFromDb(dateString);
-        return DateFormat.getDateInstance().format(date);
-    }
 
     /**
      * Helper method to provide the icon resource id according to the weather condition icon id returned

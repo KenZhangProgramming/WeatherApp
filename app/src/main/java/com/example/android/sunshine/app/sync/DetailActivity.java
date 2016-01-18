@@ -33,7 +33,6 @@ public class DetailActivity extends ActionBarActivity {
     public static final String DATE_KEY = "forecast_date";
     private Context mContext;
     private WeatherDbHelper mOpenHelper;
-    private final String LOG_TAG = DetailActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +46,12 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
     /*
-    public void EnterDatabase(View v){
-        EditText mEdit   = (EditText)findViewById(R.id.editText);
-        String descriptiontext = mEdit.getText().toString();
-        Log.v(LOG_TAG, descriptiontext);
-        ContentValues inservalues = new ContentValues();
-        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
-        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
-        Uri locationUri = mContext.getContentResolver().
-                insert(WeatherContract.DescriptionEntry.CONTENT_URI, inservalues);
-    }*/
+        Enable users to enter their feelings in the database
+    */
 
     public void EnterDatabase(View v){
         Intent intent = this.getIntent();
         String forecastDate = intent.getStringExtra(DetailActivity.DATE_KEY);
-        Log.v(LOG_TAG, forecastDate);
         EditText mEdit = (EditText)findViewById(R.id.editText);
         String descriptiontext = mEdit.getText().toString();
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
@@ -72,29 +62,22 @@ public class DetailActivity extends ActionBarActivity {
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, descriptiontext);
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_CITY, locationcity);
         inservalues.put(WeatherContract.DescriptionEntry.COLUMN_COUNTRY, locationcountry);
-        Log.v(LOG_TAG, descriptiontext);
         db.insert(WeatherContract.DescriptionEntry.TABLE_NAME, null, inservalues);
         Toast.makeText(getApplicationContext(),
                 "Your Feeling Has Been Recorded", Toast.LENGTH_LONG).show();
-
-        Log.v(LOG_TAG, "insert success!");
         db.close();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;

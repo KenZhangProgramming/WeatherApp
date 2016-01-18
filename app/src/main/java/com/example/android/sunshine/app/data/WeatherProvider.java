@@ -32,9 +32,8 @@ public class WeatherProvider extends ContentProvider{
 
     static{
         sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
-        //This is an inner join which looks like
-        //weather INNER JOIN location ON weather.location_id = location._id
-        sWeatherByLocationSettingQueryBuilder.setTables(
+        //This is an inner join
+         sWeatherByLocationSettingQueryBuilder.setTables(
                 WeatherContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
                         WeatherContract.LocationEntry.TABLE_NAME +
                         " ON " + WeatherContract.WeatherEntry.TABLE_NAME +
@@ -42,19 +41,19 @@ public class WeatherProvider extends ContentProvider{
                         " = " + WeatherContract.LocationEntry.TABLE_NAME +
                         "." + WeatherContract.LocationEntry._ID);
     }
+
     //location.location_setting = ?
     private static final String sLocationSettingSelection =
             WeatherContract.LocationEntry.TABLE_NAME +
                     "." + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_CITY + " = ? AND " +
             WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " = ?";
-            // This is correct......city and country added.............................
+
     //location.location_setting = ? AND date >= ?
     private static final String sLocationSettingWithStartDateSelection =
             WeatherContract.LocationEntry.TABLE_NAME+
                     "." + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_CITY + " = ? " +
                    " AND " + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " = ? " +
                    " AND " + WeatherContract.WeatherEntry.COLUMN_DATE + " >= ? ";
-    // This is correct......city and country added.............................
 
     //location.location_setting = ? AND date = ?
     private static final String sLocationSettingAndDaySelection =
@@ -62,7 +61,7 @@ public class WeatherProvider extends ContentProvider{
                     "." + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_CITY + " = ? " +
                     " AND " + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " = ? " +
                     " AND " + WeatherContract.WeatherEntry.COLUMN_DATE + " = ? ";
-    // This is correct......city and country added.............................
+
     private Cursor getWeatherByLocationSetting(Uri uri, String[] projection, String sortOrder) {
         String[] locationSetting = WeatherContract.WeatherEntry.getLocationSettingFromUri(uri);
         String startDate = WeatherContract.WeatherEntry.getStartDateFromUri(uri);
@@ -88,7 +87,7 @@ public class WeatherProvider extends ContentProvider{
                 null,
                 sortOrder
         );
-    }// this is correct...city and country are changed...................................................................................
+    }
 
     private Cursor getWeatherByLocationSettingAndDate(
             Uri uri, String[] projection, String sortOrder) {
@@ -105,13 +104,11 @@ public class WeatherProvider extends ContentProvider{
                 null,
                 sortOrder
         );
-    }//this is correct...city and country are changed...................................................................................
+    }
 
     /*
-        Here is where you need to create the UriMatcher. This UriMatcher will
-        match each URI to the WEATHER, WEATHER_WITH_LOCATION, WEATHER_WITH_LOCATION_AND_DATE,
-        and LOCATION integer constants defined above.  You can test this by uncommenting the
-        testUriMatcher test within TestUriMatcher. The constructor is a static constructor that's new.
+        UriMatcher will match each URI to the WEATHER, WEATHER_WITH_LOCATION, WEATHER_WITH_LOCATION_AND_DATE,
+        and LOCATION integer constants defined above.
      */
 
     static UriMatcher buildUriMatcher() {
@@ -131,6 +128,7 @@ public class WeatherProvider extends ContentProvider{
         matcher.addURI(authority, WeatherContract.PATH_LOCATION + "/#", LOCATION_ID);
         return matcher;
     }
+
     /*
             Create a new WeatherDbHelper for later use
      */
@@ -139,6 +137,7 @@ public class WeatherProvider extends ContentProvider{
             mOpenHelper = new WeatherDbHelper(getContext());
             return true;
         }
+
     /*
       getType function that uses the UriMatcher.
     */
@@ -149,9 +148,9 @@ public class WeatherProvider extends ContentProvider{
 
         switch (match){
             case WEATHER:
-                return WeatherEntry.CONTENT_TYPE;// This is usually for updates and deletes and it's a batch
+                return WeatherEntry.CONTENT_TYPE;
             case WEATHER_WITH_LOCATION:
-                return WeatherEntry.CONTENT_TYPE;// This allows to retrive many data for the location for different dates
+                return WeatherEntry.CONTENT_TYPE;
             case WEATHER_WITH_LOCATION_AND_DATE:
                 return WeatherEntry.CONTENT_ITEM_TYPE;
             case LOCATION:
@@ -227,7 +226,7 @@ public class WeatherProvider extends ContentProvider{
         return retCursor;
     }
     /*
-      Student: Add the ability to insert Locations to the implementation of this function.
+     Insert Locations
    */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
@@ -263,7 +262,6 @@ public class WeatherProvider extends ContentProvider{
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
-        // the number of rows affected if a whereClause is passed in, 0 otherwise. To remove all rows and get a count pass "1" as the whereClause.
         if ( null == selection ) selection = "1";
         switch (match) {
             case WEATHER:
@@ -309,7 +307,8 @@ public class WeatherProvider extends ContentProvider{
         }
         return rowsUpdated;
     }
-    // you have to go over this bulkInsert!!! It's very interesting!!!!
+
+    // bulkInsert data in to the database
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values){
             final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
@@ -335,30 +334,12 @@ public class WeatherProvider extends ContentProvider{
                     return super.bulkInsert(uri, values);
             }
         }
-    // You do not need to call this method. This is a method specifically to assist the testing
-    // framework in running smoothly. You can read more at:
-    // http://developer.android.com/reference/android/content/ContentProvider.html#shutdown()
+
     @Override
     public void shutdown() {
         mOpenHelper.close();
         super.shutdown();
     }
-/*
-    public void enterDatabasehelper(String s){
-       /* WeatherDbHelper mOpenHelper1 = new WeatherDbHelper(getContext());
-        SQLiteDatabase db = mOpenHelper1.getReadableDatabase();
-          db.insert(DescriptionEntry.TABLE_NAME,null,inservalues);
-        db.close();
-        *//*
-        Context mContext = this.getContext();
-        ContentValues inservalues = new ContentValues();
-        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DATE, 0);
-        inservalues.put(WeatherContract.DescriptionEntry.COLUMN_DESCRIPTION, s);
-
-        Uri locationUri = mContext.getContentResolver().
-                insert(LocationEntry.CONTENT_URI, inservalues);
-        long locationRowId = ContentUris.parseId(locationUri);
-    }*/
 }
 
 

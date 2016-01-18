@@ -38,16 +38,11 @@ import java.util.Vector;
  * Created by kenzhang on 15-11-21.
  */
 public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
-
-    private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
     private final Context mContext;
 
     public FetchWeatherTask(Context context) {
         mContext = context;
     }
-
-    private boolean DEBUG = true;
-
 
     /*
     Prepare the weather high/lows for presentation
@@ -67,7 +62,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             high = (high * 1.8) + 32;
             low = (low * 1.8) + 32;
         } else if (!unitType.equals(mContext.getString(R.string.pref_units_metric))) {
-            Log.d(LOG_TAG, "Unit type not found: " + unitType);
         }
         // for presentation, assume the user doesn't care about tenths of a degree
         long roundedHigh = Math.round(high);
@@ -88,13 +82,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
      */
     private long addLocation(String Loc_setting_city, String Loc_setting_country,
                              double lat, double lon) {
-        Log.v(LOG_TAG, "inserting " + Loc_setting_city + " , " + Loc_setting_country + ", with coord: " +
-                "" + lat + ", " + lon);
-
         // First, check if the location with this city name exists in the db
         Cursor cursor = mContext.getContentResolver().query(
                 LocationEntry.CONTENT_URI,
-                new String[]{LocationEntry._ID}, // You will get the ID from the city and country as the only return!
+                new String[]{LocationEntry._ID},
                 LocationEntry.COLUMN_LOCATION_SETTING_CITY + " = ?"
                         + " AND " + LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY + " = ?",
                 new String[]{Loc_setting_city, Loc_setting_country},
@@ -102,11 +93,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         if (cursor.moveToFirst()) {
             // When you find the record in the database, there's no insertion. There's only return!
-            Log.v(LOG_TAG, "Found it in the database!");
             int locationIdIndex = cursor.getColumnIndex(LocationEntry._ID);
             return cursor.getLong(locationIdIndex);
-        } else {   //These are the key-value pairs in the ContentValues
-            Log.v(LOG_TAG, "Didn't find it in the database, inserting now!");
+        } else {
+            //These are the key-value pairs in the ContentValues
             ContentValues inservalues = new ContentValues();
             inservalues.put(LocationEntry.COLUMN_LOCATION_SETTING_CITY, Loc_setting_city);
             inservalues.put(LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY, Loc_setting_country);
@@ -123,9 +113,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     /*
         Take the String representing the complete forecast in JSON Format and pull out the data we
-        need to construct the Strings needed for the wireframes. Fortunately parsing is easy: constructor
-        takes the JSON string and converts it into an Object hierarchy for us.
-         */
+        need to construct the Strings needed for the wireframes.
+     */
     private void getWeatherDataFromJson(String forcastJsonStr, int numDays,
                                         String Loc_setting_city, String Loc_setting_country)
             throws JSONException {
@@ -162,10 +151,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         double cityLatitude = coordJSON.getLong(OWM_COORD_LAT);
         double cityLongitude = coordJSON.getLong(OWM_COORD_LONG);
 
-        Log.v(LOG_TAG, Loc_setting_city + " , " + Loc_setting_country + ", with coord: "
-                + cityLatitude + " " + cityLongitude);
-
-        // Insert the location into the database. Get the locationID in order to refer to the correct location city and country
+        // Insert the location into the database. Get the locationID in order
+        // to refer to the correct location city and country
         long locationID = addLocation(Loc_setting_city, Loc_setting_country, cityLatitude, cityLongitude);
 
         // Get and insert the new weather information into the database
@@ -175,7 +162,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         for (int i = 0; i < weatherArray.length(); i++) {
             // These are the values that will be collected.
-
             long dateTime;
             double pressure;
             int humidity;
@@ -192,11 +178,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             //Get the JSON object representing the day.
             JSONObject dayForecast = weatherArray.getJSONObject(i);
 
-            // The date/time is returned as a long.  We need to convert that
-            // into something human-readable, since most people won't read "1400356800" as
-            // "this saturday".
+            // The date/time is returned as a long.
             dateTime = dayForecast.getLong(OWM_DT);
-
             pressure = dayForecast.getDouble(OWM_PRESSURE);
             humidity = dayForecast.getInt(OWM_HUMIDITY);
             windSpeed = dayForecast.getDouble(OWM_WINDSPEED);
@@ -210,8 +193,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             weatherId = weatherObject.getInt(OWM_WEATHER_ID);
             Weather_Icon_ID = weatherObject.getString(OWM_WEATHER_ICON_ID);
 
-            // Temperatures are in a child object called "temp".  Try not to name variables
-            // "temp" when working with temperature.  It confuses everybody.
+            // Temperatures are in a child object called "temp".  .
             JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
             high = temperatureObject.getDouble(OWM_MAX);
             low = temperatureObject.getDouble(OWM_MIN);
@@ -246,8 +228,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground (String... params) {
-        // If there's no zip code, there's nothing to look up. Verify size of params.
-        // It's a bit different here since you have two inputs instead of one!!!!!
         if (params.length == 0) {
             return null;
         }
@@ -256,13 +236,12 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         String locationCountry = params[1];
 
         // These two need to be declared outside the try/catch
-// so that they can be closed in the finally block.
+        // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         // Will contain the raw JSON response as a string.
         String forecastJsonStr = null;
-        String userInput = null;
 
         String format = "json";
         String units = "metric";
@@ -271,8 +250,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         try {
             // Construct the URL for the OpenWeatherMap query
-            // Possible parameters are available at OWM's forecast API page, at
-            // http://openweathermap.org/API#forecast
             final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
             final String QUERY_PARAM = "q";
             final String APPID_PARAM = "APPID";
@@ -287,11 +264,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                     .appendQueryParameter(UNITS_PARAM, units)
                     .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
                     .build();
-            //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?id=6173331&APPID=aa89adb4261e6003c9c8c261dc82dc34&mode=json&units=metric&cnt=14");
             URL url = new URL(builtUri.toString());
-
-            Log.v(LOG_TAG, "Built URI" + builtUri.toString());
-            Log.v(LOG_TAG, "," + params[1]);
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -318,12 +291,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 return null;
             }
             forecastJsonStr = buffer.toString();
-            Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
-
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error", e);
             // If the code didn't successfully get the weather data, there's no point in attempting
             // to parse it.
+            Log.e(FetchWeatherTask.class.getSimpleName(),"NO DATA!!!!!!!!!!!!");
             return null;
         } finally {
             if (urlConnection != null) {
@@ -333,18 +304,14 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 try {
                     reader.close();
                 } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
         }
-
         try {
             getWeatherDataFromJson(forecastJsonStr, numDays, locationCity, locationCountry);
         } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
+            Log.e(FetchWeatherTask.class.getSimpleName(),"NO DATA!!!!!!!!!!!!");
         }
-
         return null;
     }
 }

@@ -24,8 +24,6 @@ import com.example.android.sunshine.app.data.WeatherContract;
 public class DetailFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
         public static final String LOCATION_KEY_CITY = "city";
         public static final String LOCATION_KEY_COUNTRY = "country";
-        private static final String LOG_TAG = DetailFragment.class.getSimpleName();
-        public static final String LOCATION_KEY = "location";
         private String mLocationcity;
         private String mLocationcountry;
         private static final int DETAIL_LOADER = 0;
@@ -39,13 +37,10 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
                 WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
                 WeatherContract.WeatherEntry.COLUMN_PRESSURE,
                 WeatherContract.WeatherEntry.COLUMN_ICON_ID,
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_CITY,
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING_COUNTRY
         };
 
     // These indices are tied to DETAIL_COLUMNS.  If DETAIL_COLUMNS changes, these
     // must change.
-    public static final int COL_WEATHER_ID = 0;
     public static final int COL_WEATHER_DATE = 1;
     public static final int COL_WEATHER_DESC = 2;
     public static final int COL_WEATHER_MAX_TEMP = 3;
@@ -53,9 +48,8 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
     public static final int COL_WEATHER_HUMIDITY = 5;
     public static final int COL_WEATHER_PRESSURE = 6;
     public static final int COL_WEATHER_CONDITION_ID = 7;
-    public static final int COL_WEATHER_LOCATION_CITY = 10;
-    public static final int COL_WEATHER_LOCATION_COUNTRY = 11;
 
+    // All the views that are needed for display
     private ImageView mIconView;
     private TextView mDateView;
     private TextView mDescriptionView;
@@ -112,7 +106,6 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            Log.v(LOG_TAG, "In onCreateLoader");
             Intent intent = getActivity().getIntent();
             if (intent == null || !intent.hasExtra(DetailActivity.DATE_KEY)) {
                 return null;
@@ -127,9 +120,7 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
             mLocationcountry = Utility.getPreferredLocationCountry(getActivity());
             Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
                     mLocationcity, mLocationcountry, forecastDate);
-            Log.v(LOG_TAG, weatherForLocationUri.toString());
 
-            // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
                     getActivity(),
@@ -143,9 +134,6 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            Log.v(LOG_TAG, "In onLoadFinished");
-
-            // why u need data.moveToFirst to be false?!!!
             if (data != null && data.moveToFirst()) {
 
                 String iconId = data.getString(COL_WEATHER_CONDITION_ID);
