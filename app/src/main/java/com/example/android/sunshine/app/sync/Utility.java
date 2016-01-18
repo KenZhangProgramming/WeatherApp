@@ -161,25 +161,6 @@ public class Utility {
         }
     }
 
-
-    /*
-    * Monday, Tuesday, Wednesday correct formats for input long
-    *
-    * */
-    public static String getReadableDateString(long time) {
-        Date date = new Date(time * 1000L);
-        TimeZone tz = TimeZone.getDefault();
-        Calendar cal = GregorianCalendar.getInstance(tz);
-        int offsetInMillis = tz.getOffset(cal.getTimeInMillis());
-        String offset = String.format("%02d:%02d", Math.abs(offsetInMillis / 3600000), Math.abs((offsetInMillis / 60000) % 60));
-        offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
-        SimpleDateFormat sdf = new SimpleDateFormat("EE MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT" + offset));
-        String formattedDate = sdf.format(date);
-        return formattedDate;
-    }
-
-
     /*Change the date format from integer string to the ones that can be displayed properly on the screen*/
 
     public static String changeDateFormat(String s){

@@ -44,7 +44,11 @@
 
         <activity
             android:name=".sync.DescriptionActivity"
-            android:label="@string/title_activity_description" >
+            android:label="@string/title_activity_description"
+            android:parentActivityName=".sync.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.sunshine.app.sync.MainActivity" />
         </activity>
     </application>
 
