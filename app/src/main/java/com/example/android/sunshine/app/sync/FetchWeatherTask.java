@@ -212,12 +212,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             weatherValues.put(WeatherEntry.COLUMN_SHORT_DESC, description);
             weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, weatherId);
             weatherValues.put(WeatherEntry.COLUMN_ICON_ID,  Weather_Icon_ID);
-
             cVVector.add(weatherValues);
-
-            String highAndLow = formatHighLows(high, low);
-            String day = Utility.getReadableDateString(dateTime);
-            resultStrs[i] = day + " - " + description + " - " + highAndLow;
         }
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];

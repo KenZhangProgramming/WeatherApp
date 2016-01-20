@@ -92,8 +92,6 @@
         </LinearLayout>
 
         <!-- Humidity, wind, pressure -->
-
-
         <EditText
             android:id="@+id/editText"
             android:layout_width="210dip"
