@@ -146,15 +146,12 @@ public class DetailFragment extends Fragment implements android.support.v4.app.L
                 String weatherDescription = data.getString(COL_WEATHER_DESC);
                 mDescriptionView.setText(weatherDescription);
 
-                boolean isMetric = Utility.isMetric(getActivity());
-
-                String high = Utility.formatTemperature(
-                        data.getDouble(COL_WEATHER_MAX_TEMP), isMetric);
+                String high = Utility.formatTemperature(getActivity(),
+                        data.getDouble(COL_WEATHER_MAX_TEMP));
                 mHighTempView.setText("Max: " + high);
 
-
-                String low = Utility.formatTemperature(
-                       data.getDouble(COL_WEATHER_MIN_TEMP), isMetric);
+                String low = Utility.formatTemperature(getActivity(),
+                       data.getDouble(COL_WEATHER_MIN_TEMP));
                 mLowTempView.setText("Min: " + low);
 
                 // Read humidity from cursor and update view

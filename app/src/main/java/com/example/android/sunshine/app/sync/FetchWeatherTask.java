@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
@@ -43,6 +44,16 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
     public FetchWeatherTask(Context context) {
         mContext = context;
     }
+
+    private void notification(){
+        MainActivity mainScreen = new MainActivity();
+        Toast.makeText(mainScreen.getApplicationContext(),
+                "No Data! Please Check Your Location Settings", Toast.LENGTH_LONG).show();
+    }
+
+
+
+
 
     /*
     Prepare the weather high/lows for presentation
@@ -289,7 +300,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         } catch (IOException e) {
             // If the code didn't successfully get the weather data, there's no point in attempting
             // to parse it.
-            Log.e(FetchWeatherTask.class.getSimpleName(),"NO DATA!!!!!!!!!!!!");
             return null;
         } finally {
             if (urlConnection != null) {
@@ -305,7 +315,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         try {
             getWeatherDataFromJson(forecastJsonStr, numDays, locationCity, locationCountry);
         } catch (JSONException e) {
-            Log.e(FetchWeatherTask.class.getSimpleName(),"NO DATA!!!!!!!!!!!!");
         }
         return null;
     }

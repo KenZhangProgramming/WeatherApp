@@ -16,7 +16,8 @@
 
     <!-- Humidity format in % [CHAR LIMIT=NONE] -->
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
-
+    <!-- Temperature format -->
+    <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
     <!-- table column names-->
     <string name="table_Max">Max</string>
     <string name="table_Min">Min</string>

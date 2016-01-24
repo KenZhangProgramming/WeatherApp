@@ -19,7 +19,7 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_COUNT = 2;
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
-
+    private Context adapterContext;
     /**
      * Cache of the children views for a forecast list item.
      */
@@ -41,6 +41,7 @@ public class ForecastAdapter extends CursorAdapter {
 
     public ForecastAdapter(Context context, Cursor c, int flags){
         super(context, c, flags);
+        adapterContext = context;
     }
 
     @Override
@@ -95,16 +96,13 @@ public class ForecastAdapter extends CursorAdapter {
         // Find TextView and set weather forecast on it
         viewHolder.descriptionView.setText(description);
 
-        // Read user preference for metric or imperial temperature units
-        boolean isMetric = Utility.isMetric(context);
-
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText("Max: " + Utility.formatTemperature(high, isMetric));
+        viewHolder.highTempView.setText("Max: " + Utility.formatTemperature(adapterContext,high));
 
         //Read low temperature from cursor
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText("Min: " + Utility.formatTemperature(low, isMetric));
+        viewHolder.lowTempView.setText("Min: " + Utility.formatTemperature(adapterContext,low));
     }
 
     @Override
